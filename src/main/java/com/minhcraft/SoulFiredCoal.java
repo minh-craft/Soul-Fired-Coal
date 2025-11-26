@@ -1,11 +1,13 @@
 package com.minhcraft;
 
+import com.minhcraft.block.ModBlocks;
+import com.minhcraft.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Soulfiredcoal implements ModInitializer {
+public class SoulFiredCoal implements ModInitializer {
 	public static final String MOD_ID = "soul-fired-coal";
 
 	// This logger is used to write text to the console and the log file.
@@ -19,6 +21,7 @@ public class Soulfiredcoal implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
+		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 	}
 }
