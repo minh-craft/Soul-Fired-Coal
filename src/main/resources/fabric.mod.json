@@ -2,24 +2,24 @@
 	"schemaVersion": 1,
 	"id": "soul-fired-coal",
 	"version": "${version}",
-	"name": "soul-fired-coal",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Soul Fired Coal",
+	"description": "Adds Soul Fired Coal to the Nether. Smelts longer than coal and crafts into soul torches and campfires.",
 	"authors": [
-		"Me!"
+		"minhcraft"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "minhcraft.dev@gmail.com",
+		"sources": "https://github.com/minh-craft/Soul-Fired-Coal"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/soul-fired-coal/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.minhcraft.Soulfiredcoal"
+			"com.minhcraft.SoulFiredCoal"
 		],
 		"client": [
-			"com.minhcraft.SoulfiredcoalClient"
+			"com.minhcraft.SoulFiredCoalClient"
 		]
 	},
 	"mixins": [
