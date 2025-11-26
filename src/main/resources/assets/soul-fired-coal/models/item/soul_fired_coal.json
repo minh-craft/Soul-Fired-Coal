@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "soul-fired-coal:item/soul_fired_coal"
+  }
+}
