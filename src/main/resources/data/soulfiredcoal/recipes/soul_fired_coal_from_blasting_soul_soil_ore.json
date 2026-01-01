@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "soul_fired_coal",
+  "ingredient": {
+    "item": "soulfiredcoal:soul_soil_soul_fired_coal_ore"
+  },
+  "result": "soulfiredcoal:soul_fired_coal"
+}

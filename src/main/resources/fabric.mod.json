@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "soulfiredcoal",
+  "version": "${version}",
+
+  "name": "SoulFiredCoal",
+  "description": "",
+  "authors": [],
+  "contact": {},
+
+  "license": "MIT",
+  "icon": "assets/soulfiredcoal/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": ["com.leclowndu93150.soulfiredcoal.client.SoulfiredcoalClient"],
+    "main": ["com.leclowndu93150.soulfiredcoal.Soulfiredcoal"]
+  },
+
+  "mixins": [
+    "soulfiredcoal.mixins.json"
+  ],
+
+  "accessWidener": "soulfiredcoal.accesswidener",
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

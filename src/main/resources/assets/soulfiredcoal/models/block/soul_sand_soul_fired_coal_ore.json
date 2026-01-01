@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "soulfiredcoal:block/soul_sand_soul_fired_coal_ore"
+  }
+}
