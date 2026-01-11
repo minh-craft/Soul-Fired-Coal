@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
-public class Soulfiredcoal implements ModInitializer {
+public class SoulFiredCoal implements ModInitializer {
 
     public static final String MOD_ID = "soulfiredcoal";
 

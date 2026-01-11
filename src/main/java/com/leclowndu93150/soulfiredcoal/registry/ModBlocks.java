@@ -8,7 +8,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
 public class ModBlocks {
@@ -35,11 +34,12 @@ public class ModBlocks {
     public static final Block SOUL_FIRED_COAL_BLOCK = register("soul_fired_coal_block",
             new Block(
                     FabricBlockSettings.create()
-                            .mapColor(MapColor.COLOR_BLACK)
+                            .mapColor(MapColor.COLOR_CYAN)
                             .strength(5.0F, 6.0F)
                             .requiresTool()
                             .sound(SoundType.STONE)
                             .emissiveRendering((state, world, pos) -> true)
+                            .lightLevel(blockState -> 1)
             ));
 
     private static Block register(String name, Block block) {

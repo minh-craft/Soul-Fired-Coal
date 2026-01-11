@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class SoulfiredcoalClient implements ClientModInitializer {
+public class SoulFiredCoalClient implements ClientModInitializer {
 
     private static final Map<Block, ResourceLocation> EMISSIVE_BLOCKS = new HashMap<>();
 

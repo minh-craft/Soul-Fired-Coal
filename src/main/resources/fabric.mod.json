@@ -13,8 +13,12 @@
 
   "environment": "*",
   "entrypoints": {
-    "client": ["com.leclowndu93150.soulfiredcoal.client.SoulfiredcoalClient"],
-    "main": ["com.leclowndu93150.soulfiredcoal.Soulfiredcoal"]
+    "client": [
+      "com.leclowndu93150.soulfiredcoal.client.SoulFiredCoalClient"
+    ],
+    "main": [
+      "com.leclowndu93150.soulfiredcoal.SoulFiredCoal"
+    ]
   },
 
   "mixins": [
