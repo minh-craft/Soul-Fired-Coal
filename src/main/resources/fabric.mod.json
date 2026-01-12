@@ -5,8 +5,11 @@
 
   "name": "SoulFiredCoal",
   "description": "Adds soul fired coal ore to soul sand and soil soil.",
-  "authors": ["https://github.com/Leclowndu93150/", "https://github.com/minh-craft/"],
-  "contact": "minhcraft.dev@gmail.com",
+  "authors": ["https://github.com/Leclowndu93150/", "https://github.com/minh-craft/", "https://www.youtube.com/@Emperor_Creeper"],
+  "contact": {
+    "email": "minhcraft.dev@gmail.com",
+    "sources": "https://github.com/minh-craft/Soul-Fired-Coal"
+  },
 
   "license": "MIT",
   "icon": "assets/soulfiredcoal/icon.png",

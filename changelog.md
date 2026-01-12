@@ -1,3 +1,10 @@
+## v1.1.1
+
+### Changed
+- Fixed fabric mod properties
+
+---
+
 ## v1.1.0
 
 ### Added
