@@ -29,6 +29,9 @@ public abstract class AbstractFurnaceBlockEntityMixin implements LastFuelTypeAcc
     int litTime;
 
     @Shadow
+    int litDuration;
+
+    @Shadow
     int cookingProgress;
 
     @Shadow
@@ -141,6 +144,11 @@ public abstract class AbstractFurnaceBlockEntityMixin implements LastFuelTypeAcc
         if (self.soulfiredcoal$prevLitTime <= 0 && self.litTime > 0) {
             int newFuelType = self.soulfiredcoal$isSoulFiredCoalFuel ? 1 : 0;
             self.soulfiredcoal$lastFuelType = newFuelType;
+
+            if (self.litDuration == 0) {
+                self.litDuration = self.litTime;
+            }
+
             blockEntity.setChanged();
 
             boolean isSoulFire = newFuelType == 1;
@@ -179,6 +187,7 @@ public abstract class AbstractFurnaceBlockEntityMixin implements LastFuelTypeAcc
         tag.putBoolean("SoulFiredCoalFuel", this.soulfiredcoal$isSoulFiredCoalFuel);
         tag.putInt("SoulFiredCoalOriginalCookTime", this.soulfiredcoal$originalCookTime);
         tag.putByte("SoulFiredCoalLastFuelType", (byte) this.soulfiredcoal$lastFuelType);
+        tag.putInt("SoulFiredCoalLitDuration", this.litDuration);
     }
 
     @Inject(method = "load", at = @At("TAIL"))
@@ -191,6 +200,9 @@ public abstract class AbstractFurnaceBlockEntityMixin implements LastFuelTypeAcc
         }
         if (tag.contains("SoulFiredCoalLastFuelType")) {
             this.soulfiredcoal$lastFuelType = tag.getByte("SoulFiredCoalLastFuelType");
+        }
+        if (tag.contains("SoulFiredCoalLitDuration") && this.litDuration == 0 && this.litTime > 0) {
+            this.litDuration = tag.getInt("SoulFiredCoalLitDuration");
         }
     }
 }
