@@ -37,7 +37,7 @@ public abstract class BrewingStandBlockEntityMixin implements LastFuelTypeAccess
     private ContainerData soulfiredcoal$wrappedDataAccess = null;
 
     @Unique
-    private ContainerData soulfiredcoal$getWrappedDataAccess() {
+    public ContainerData soulfiredcoal$getWrappedDataAccess() {
         if (soulfiredcoal$wrappedDataAccess == null) {
             ContainerData original = this.dataAccess;
             BrewingStandBlockEntityMixin self = this;

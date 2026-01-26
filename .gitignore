@@ -9,8 +9,9 @@
 out/
 # mpeltonen/sbt-idea plugin
 .idea_modules/
-
+fabric-api-1.20.1
 # JIRA plugin
+Minecraft-Source-1.20.1
 atlassian-ide-plugin.xml
 
 # Compiled class file

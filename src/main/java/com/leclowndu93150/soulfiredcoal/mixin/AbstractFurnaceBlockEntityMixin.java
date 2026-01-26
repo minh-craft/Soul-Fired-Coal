@@ -1,13 +1,17 @@
 package com.leclowndu93150.soulfiredcoal.mixin;
 
+import com.leclowndu93150.soulfiredcoal.api.LastFuelTypeAccessor;
+import com.leclowndu93150.soulfiredcoal.registry.ModBlockStateProperties;
 import com.leclowndu93150.soulfiredcoal.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
-public abstract class AbstractFurnaceBlockEntityMixin {
+public abstract class AbstractFurnaceBlockEntityMixin implements LastFuelTypeAccessor {
 
     @Shadow
     protected NonNullList<ItemStack> items;
@@ -25,16 +29,76 @@ public abstract class AbstractFurnaceBlockEntityMixin {
     int litTime;
 
     @Shadow
+    int litDuration;
+
+    @Shadow
     int cookingProgress;
 
     @Shadow
     int cookingTotalTime;
+
+    @Shadow
+    @Final
+    protected ContainerData dataAccess;
 
     @Unique
     private boolean soulfiredcoal$isSoulFiredCoalFuel = false;
 
     @Unique
     private int soulfiredcoal$originalCookTime = -1;
+
+    @Unique
+    private int soulfiredcoal$lastFuelType = 0;
+
+    @Unique
+    private int soulfiredcoal$prevLitTime = 0;
+
+    @Unique
+    private ContainerData soulfiredcoal$wrappedDataAccess = null;
+
+    @Override
+    @Unique
+    public int soulfiredcoal$getLastFuelType() {
+        return this.soulfiredcoal$lastFuelType;
+    }
+
+    @Override
+    @Unique
+    public void soulfiredcoal$setLastFuelType(int type) {
+        this.soulfiredcoal$lastFuelType = type;
+    }
+
+    @Unique
+    public ContainerData soulfiredcoal$getWrappedDataAccess() {
+        if (soulfiredcoal$wrappedDataAccess == null) {
+            ContainerData original = this.dataAccess;
+            AbstractFurnaceBlockEntityMixin self = this;
+            soulfiredcoal$wrappedDataAccess = new ContainerData() {
+                @Override
+                public int get(int index) {
+                    if (index == 4) {
+                        return self.soulfiredcoal$lastFuelType;
+                    }
+                    return original.get(index);
+                }
+
+                @Override
+                public void set(int index, int value) {
+                    if (index == 4) {
+                        self.soulfiredcoal$lastFuelType = value;
+                    } else {
+                        original.set(index, value);
+                    }
+                }
+
+                @Override
+                public int getCount() {
+                    return 5;
+                }
+            };
+        }
+        return soulfiredcoal$wrappedDataAccess;
+    }
 
     @Inject(method = "serverTick", at = @At("HEAD"))
     private static void soulfiredcoal$trackFuelAndAdjustCookTime(Level level, BlockPos pos, BlockState state,
@@ -73,9 +137,34 @@ public abstract class AbstractFurnaceBlockEntityMixin {
     }
 
     @Inject(method = "serverTick", at = @At("TAIL"))
-    private static void soulfiredcoal$checkFuelBurnout(Level level, BlockPos pos, BlockState state,
+    private static void soulfiredcoal$checkFuelBurnoutAndTrackType(Level level, BlockPos pos, BlockState state,
             AbstractFurnaceBlockEntity blockEntity, CallbackInfo ci) {
         AbstractFurnaceBlockEntityMixin self = (AbstractFurnaceBlockEntityMixin) (Object) blockEntity;
+
+        if (self.soulfiredcoal$prevLitTime <= 0 && self.litTime > 0) {
+            int newFuelType = self.soulfiredcoal$isSoulFiredCoalFuel ? 1 : 0;
+            self.soulfiredcoal$lastFuelType = newFuelType;
+
+            if (self.litDuration == 0) {
+                self.litDuration = self.litTime;
+            }
+
+            blockEntity.setChanged();
+
+            boolean isSoulFire = newFuelType == 1;
+            BlockState currentState = level.getBlockState(pos);
+            if (currentState.hasProperty(ModBlockStateProperties.SOUL_LIT) &&
+                    currentState.getValue(ModBlockStateProperties.SOUL_LIT) != isSoulFire) {
+                level.setBlock(pos, currentState.setValue(ModBlockStateProperties.SOUL_LIT, isSoulFire), 3);
+            }
+        }
+        self.soulfiredcoal$prevLitTime = self.litTime;
+
+        BlockState currentState = level.getBlockState(pos);
+        if (self.litTime <= 0 && currentState.hasProperty(ModBlockStateProperties.SOUL_LIT) &&
+                currentState.getValue(ModBlockStateProperties.SOUL_LIT)) {
+            level.setBlock(pos, currentState.setValue(ModBlockStateProperties.SOUL_LIT, false), 3);
+        }
 
         if (self.litTime <= 0) {
             ItemStack fuelStack = self.items.get(1);
@@ -97,6 +186,8 @@ public abstract class AbstractFurnaceBlockEntityMixin {
     private void soulfiredcoal$saveFuelType(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("SoulFiredCoalFuel", this.soulfiredcoal$isSoulFiredCoalFuel);
         tag.putInt("SoulFiredCoalOriginalCookTime", this.soulfiredcoal$originalCookTime);
+        tag.putByte("SoulFiredCoalLastFuelType", (byte) this.soulfiredcoal$lastFuelType);
+        tag.putInt("SoulFiredCoalLitDuration", this.litDuration);
     }
 
     @Inject(method = "load", at = @At("TAIL"))
@@ -106,6 +197,12 @@ public abstract class AbstractFurnaceBlockEntityMixin {
         }
         if (tag.contains("SoulFiredCoalOriginalCookTime")) {
             this.soulfiredcoal$originalCookTime = tag.getInt("SoulFiredCoalOriginalCookTime");
+        }
+        if (tag.contains("SoulFiredCoalLastFuelType")) {
+            this.soulfiredcoal$lastFuelType = tag.getByte("SoulFiredCoalLastFuelType");
+        }
+        if (tag.contains("SoulFiredCoalLitDuration") && this.litDuration == 0 && this.litTime > 0) {
+            this.litDuration = tag.getInt("SoulFiredCoalLitDuration");
         }
     }
 }
