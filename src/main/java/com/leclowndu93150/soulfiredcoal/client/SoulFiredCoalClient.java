@@ -19,6 +19,7 @@ import java.util.function.Function;
 public class SoulFiredCoalClient implements ClientModInitializer {
 
     private static final Map<Block, ResourceLocation> EMISSIVE_BLOCKS = new HashMap<>();
+    private static final ResourceLocation SOUL_FURNACE_FRONT = new ResourceLocation("soulfiredcoal", "block/soul_furnace_front_on");
 
     static {
         EMISSIVE_BLOCKS.put(ModBlocks.SOUL_SAND_SOUL_FIRED_COAL_ORE,
@@ -39,22 +40,33 @@ public class SoulFiredCoalClient implements ClientModInitializer {
             pluginContext.addModels(
                     new ResourceLocation("soulfiredcoal", "block/soul_sand_soul_fired_coal_ore_e"),
                     new ResourceLocation("soulfiredcoal", "block/soul_soil_soul_fired_coal_ore_e"),
-                    new ResourceLocation("soulfiredcoal", "block/soul_fired_coal_block_e")
+                    new ResourceLocation("soulfiredcoal", "block/soul_fired_coal_block_e"),
+                    new ResourceLocation("soulfiredcoal", "block/soul_furnace_front_on")
             );
 
             pluginContext.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE, (model, context) -> {
                 ResourceLocation modelId = context.id();
+                Function<Material, TextureAtlasSprite> spriteGetter = context.textureGetter();
 
                 for (Map.Entry<Block, ResourceLocation> entry : EMISSIVE_BLOCKS.entrySet()) {
                     String blockId = "soulfiredcoal:block/" + getBlockId(entry.getKey());
                     if (modelId.toString().contains(blockId)) {
-                        Function<Material, TextureAtlasSprite> spriteGetter = context.textureGetter();
                         if (spriteGetter != null) {
                             Material emissiveMaterial = new Material(TextureAtlas.LOCATION_BLOCKS, entry.getValue());
                             TextureAtlasSprite emissiveSprite = spriteGetter.apply(emissiveMaterial);
                             if (emissiveSprite != null) {
                                 return new EmissiveBakedModel(model, emissiveSprite);
                             }
+                        }
+                    }
+                }
+
+                if (modelId.toString().contains("minecraft:block/furnace_on")) {
+                    if (spriteGetter != null) {
+                        Material soulFrontMaterial = new Material(TextureAtlas.LOCATION_BLOCKS, SOUL_FURNACE_FRONT);
+                        TextureAtlasSprite soulFrontSprite = spriteGetter.apply(soulFrontMaterial);
+                        if (soulFrontSprite != null) {
+                            return new SoulFurnaceBakedModel(model, soulFrontSprite);
                         }
                     }
                 }

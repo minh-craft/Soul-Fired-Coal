@@ -5,14 +5,19 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
+    "AbstractFurnaceBlockMixin",
+    "AbstractFurnaceMenuMixin",
     "BrewingStandBlockEntityMixin",
     "BrewingStandBlockEntityAccessor",
     "BrewingStandMenuMixin",
     "BrewingStandMenuFuelSlotMixin",
+    "FurnaceBlockEntityMixin",
     "MinecartFurnaceMixin"
   ],
   "client": [
-    "client.BrewingStandScreenMixin"
+    "client.AbstractFurnaceScreenMixin",
+    "client.BrewingStandScreenMixin",
+    "client.FurnaceBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
