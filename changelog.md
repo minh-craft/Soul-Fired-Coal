@@ -1,3 +1,11 @@
+## v1.2.1
+
+### Changed
+- Halved soul fired coal item and block cook time, to account for cooking items twice as quickly now
+- Soul fired coal = 32 items, soul fired coal block = 320 items
+
+---
+
 ## v1.2.0
 Contributed by https://github.com/Leclowndu93150/ as a commission
 

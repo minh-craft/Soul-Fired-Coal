@@ -20,9 +20,12 @@ public class SoulFiredCoal implements ModInitializer {
         ModBlocks.init();
         ModItems.init();
 
-        FuelRegistry.INSTANCE.add(ModItems.SOUL_FIRED_COAL, 6400);
+        // For some reason 3200 exactly doesn't cook 32 items fully
+        // Likely a timing bug with soul fired coal reducing item cook time slightly too late
+        // Adding a bit of extra cook time to account for this
+        FuelRegistry.INSTANCE.add(ModItems.SOUL_FIRED_COAL, 3201);
 
-        FuelRegistry.INSTANCE.add(ModItems.SOUL_FIRED_COAL_BLOCK, 64000);
+        FuelRegistry.INSTANCE.add(ModItems.SOUL_FIRED_COAL_BLOCK, 32001);
 
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInTheNether(),
