@@ -11,7 +11,7 @@
     "sources": "https://github.com/minh-craft/Soul-Fired-Coal"
   },
 
-  "license": "MIT",
+  "license": "Mozilla Public License 2.0",
   "icon": "assets/soulfiredcoal/icon.png",
 
   "environment": "*",
