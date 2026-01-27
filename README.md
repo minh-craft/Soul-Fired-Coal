@@ -1,3 +1,4 @@
+## Description
 Adds Soul Fired Coal Ore to Soul Sand and Soul Soil in the Nether. Created for the Beyond Beta modpack.
 - Smelts 4x as many items as coal, and twice as fast (in furnaces).
     - Will display soul fire in the furnace GUI and on the furnace block while fueled by soul fire.
@@ -5,12 +6,11 @@ Adds Soul Fired Coal Ore to Soul Sand and Soul Soil in the Nether. Created for t
 - Usable as fuel in brewing stands and furnace minecarts.
 - Replaces crafting recipes for soul torches and campfires.
 
-Inspired by Nether Coal from Better than Wolves and Better than Adventure.
-
-Credits:
+## Credits:
 - Developed by https://github.com/Leclowndu93150/ as a commission
 - Soul Fired Coal texture by Glorious Emperor Creeper https://www.youtube.com/@Emperor_Creeper
+- Inspired by Nether Coal from Better than Wolves and Better than Adventure.
 
-License:
+## License:
 
 This mod is available under the MPL 2.0 license https://www.mozilla.org/en-US/MPL/2.0/
