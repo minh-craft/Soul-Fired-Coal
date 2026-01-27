@@ -1,3 +1,12 @@
+## v1.2.0
+Contributed by https://github.com/Leclowndu93150/ as a commission
+
+### Added
+- Updated GUI for furnace to show soul fire when burning soul fired coal
+- Added new block visual for furnace that shows soul fire when burning soul fired coal
+
+---
+
 ## v1.1.1
 
 ### Changed
