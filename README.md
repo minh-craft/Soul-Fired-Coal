@@ -8,7 +8,7 @@ Adds Soul Fired Coal Ore to Soul Sand and Soul Soil in the Nether. Created for t
 
 ## Credits:
 - Developed by https://github.com/Leclowndu93150/ as a commission
-- Soul Fired Coal texture by Glorious Emperor Creeper https://www.youtube.com/@Emperor_Creeper
+- Soul Fired Coal texture by @Glorious Emperor Creeper https://www.youtube.com/@Emperor_Creeper
 - Inspired by Nether Coal from Better than Wolves and Better than Adventure.
 
 ## License:
